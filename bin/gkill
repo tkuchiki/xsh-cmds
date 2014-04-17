@@ -1,0 +1,10 @@
+#!/bin/sh
+
+KEYWORD="${1}"
+SIGNAL="${2:-9}"
+
+PLIST=`ps aux | grep "${KEYWORD}" | grep -v $0 | grep -v grep | awk '{ print $2 }'`
+
+if [ "${PLIST}" = "" ] ; then exit 1; fi
+
+for PID in $PLIST; do kill -${SIGNAL} $PID; done
